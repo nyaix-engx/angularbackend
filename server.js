@@ -16,7 +16,7 @@ app.post("/create/", (req, res) => {
 
 app.get("/read/", (req, res) => {
   try {
-    res.sendStatus(200).send(JSON.stringify(products));
+    res.send(JSON.stringify(products));
   } catch (e) {
     res.sendStatus(400).send(e);
   }
@@ -26,7 +26,7 @@ app.patch("/update/", (req, res) => {
   try {
     const index = products.findIndex((item) => item.name === req.body.name);
     products[index] = req.body;
-    res.sendStatus(200).send();
+    res.sendStatus(200);
   } catch (e) {
     res.sendStatus(400).send(e);
   }
@@ -36,7 +36,7 @@ app.delete("/delete", (req, res) => {
   try {
     const newarray = products.filter((item) => item.name !== req.body.name);
     products = newarray;
-    res.sendStatus(200).send();
+    res.sendStatus(200);
   } catch (e) {
     res.sendStatus(400).send(e);
   }

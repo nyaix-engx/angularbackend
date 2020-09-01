@@ -34,11 +34,19 @@ app.patch("/update/", (req, res) => {
 
 app.delete("/delete", (req, res) => {
   try {
-    const newarray = products.filter((item) => item.name !== req.body.name);
-    products = newarray;
-    res.sendStatus(200);
+    const index = products.findIndex((item) => item.title === req.body.title);
+
+    if (index < 0) {
+      res.sendStatus(404);
+    } else if (index >= 0 && products.length == 1) {
+      products.length = 0;
+      res.sendStatus(200);
+    } else if (index >= 0 && products.length > 1) {
+      delete products.splice(index, 1);
+      res.sendStatus(200);
+    }
   } catch (e) {
-    res.sendStatus(400).send(e);
+    res.send(e);
   }
 });
 
